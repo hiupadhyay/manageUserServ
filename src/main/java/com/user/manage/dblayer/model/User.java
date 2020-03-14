@@ -1,5 +1,6 @@
 package com.user.manage.dblayer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     private String firstName;
@@ -20,8 +22,8 @@ public class User {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
-    private boolean enabled;
 
 }
