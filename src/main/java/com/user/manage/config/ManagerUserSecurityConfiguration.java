@@ -28,8 +28,7 @@ public class ManagerUserSecurityConfiguration extends WebSecurityConfigurerAdapt
     }
 
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-                "/configuration/security", "/swagger-ui.html", "/webjars/**", "/api/v1/manage-user/auth/**");
+        web.ignoring().antMatchers("/", "/api/v1/manage-user/auth/**");
     }
 
 

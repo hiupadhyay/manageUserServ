@@ -3,6 +3,7 @@ package com.user.manage.controller;
 import com.user.manage.auth.AuthProviders;
 import com.user.manage.dblayer.model.User;
 import com.user.manage.dblayer.repository.UserRepository;
+import com.user.manage.responses.LogOutResponse;
 import com.user.manage.responses.LoginResponse;
 import com.user.manage.responses.RegistrationResponse;
 import com.user.manage.util.PasswordUtil;
@@ -61,31 +62,25 @@ public class UserController {
         User user = userRepo.findByEmail(userId);
         if (user == null) {
             logger.info("email id in incorrect which means user is not registered with user id: {}", userId);
-            return new LoginResponse("User not Registered", null, null);
+            return new LoginResponse("User not Registered", null, null, 0L);
 
         } else if (!PasswordUtil.checkPassword(password, user.getPassword())) {
             logger.info("email id is correct,incorrect password: {}", password);
-            return new LoginResponse("Incorrect Password", null, null);
+            return new LoginResponse("Incorrect Password", null, null, 0L);
 
         } else {
             provider.createToken(user);
-            return new LoginResponse("User Logged in Successfully", user.getApp_id(), user.getAuth_token());
+            return new LoginResponse("User Logged in Successfully", user.getApp_id(), user.getAuth_token(), user.getExpires_in());
 
         }
     }
 
     @GetMapping(value = "/logout")
     @ApiOperation(value = "user logout", notes = "end point performs logout for user")
-    public ResponseEntity<Boolean> logout(final HttpServletRequest request) {
-        try {
-            request.logout();
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
-        } catch (ServletException ex) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("There is a problem with the logout of the user", ex);
-            }
-            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.INTERNAL_SERVER_ERROR);
-
-        }
+    public LogOutResponse logout(@RequestParam @ApiParam(value = "Enter Your Application id", type = "string") String app_id) {
+        if (userRepo.logout(app_id) > 0)
+            return new LogOutResponse("Logged out Successfully",app_id);
+        else
+            return new LogOutResponse("Error in logout",app_id);
     }
 }

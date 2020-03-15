@@ -32,5 +32,8 @@ public class User {
     @JsonIgnore
     private String auth_token;
 
+    @JsonIgnore
+    private Long expires_in;
+
 
 }

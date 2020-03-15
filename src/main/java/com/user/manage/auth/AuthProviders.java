@@ -16,9 +16,11 @@ public class AuthProviders {
     public void createToken(User user) {
         String authString = user.getEmail() + ":" + user.getPassword();
         String authStringEnc = Base64.getEncoder().encodeToString(authString.getBytes());
-        authStringEnc = "Basic " + authStringEnc;
         user.setApp_id(user.getEmail());
         user.setAuth_token(authStringEnc);
+        user.setExpires_in(1000L);
         userRepository.save(user);
     }
+
+
 }
