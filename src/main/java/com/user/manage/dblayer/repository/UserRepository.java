@@ -17,8 +17,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("Update app_user u set u.auth_token=null where app_id=:app_id")
     Integer logout(String app_id);
 
-    @Query("SELECT u FROM app_user u WHERE u.email=:email")
-    User userExists(String email);
+    @Query("SELECT u FROM app_user u WHERE u.email=:email and u.auth_token=:auth_token")
+    User userExists(String email,String auth_token);
 
 
 

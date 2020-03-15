@@ -28,16 +28,10 @@ public class ManageUser {
         return "Sum of two numbers is :  " + (number_a + number_b);
     }
 
-    @GetMapping("/test")
+    @GetMapping("/history")
     public String test() {
         return "testing sample endpoint through swagger";
     }
-
-    @GetMapping("/test1")
-    public String test1() {
-        return "testing1 sample endpoint through swagger";
-    }
-
 
 
 }
