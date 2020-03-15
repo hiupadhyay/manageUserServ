@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 
 @Data
-@Entity(name="app_user")
+@Entity(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,12 @@ public class User {
 
     @JsonIgnore
     private String password;
+
+    @JsonIgnore
+    private String app_id;
+
+    @JsonIgnore
+    private String auth_token;
 
 
 }
